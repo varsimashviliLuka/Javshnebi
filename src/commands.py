@@ -3,7 +3,7 @@ import click
 import csv
 from os import path
 
-from src.models import Category, Center
+from src.models import Category, Center, User, Role
 from src.extensions import db
 from src import Config
 
@@ -49,9 +49,22 @@ def populate_db():
                 name_english=row['name_english']
 
             )
-            new_center.create()
+            new_category.create()
 
-    click.echo("Categories added successfully")
+    click.echo("Adding test user")
+
+    # Iterate through each row in the CSV file
+
+    new_role = Role(name="Admin", is_admin=True)
+    new_role.create()
+
+    new_user = User(email='luka.varsimashvili@iliauni.edu.ge',
+                    password='LUKAluka123',
+                    verified=True,
+                    role=new_role)
+    new_user.create()
+
+    click.echo("Test user added successfully")
     click.echo("First tables added")
 
 
