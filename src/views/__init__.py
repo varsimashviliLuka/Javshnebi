@@ -1,0 +1,1 @@
+from src.views.test.routes import test_blueprint

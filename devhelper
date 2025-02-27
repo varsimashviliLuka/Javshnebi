@@ -1,0 +1,19 @@
+ self.city_ids = {
+            "ქუთაისი": 2,
+            "ბათუმი": 3,
+            "თელავი": 4,
+            "ახალციხე": 5,
+            "ზუგდიდი": 6,
+            "გორი": 7,
+            "ფოთი": 8,
+            "ოზურგეთი": 9,
+            "საჩხერე": 10,
+            "რუსთავი": 15
+        }
+
+        self.transmition_ids = {
+            "მექანიკა": 3,
+            "ავტომატიკა": 4
+        }
+
+LINK = f"https://api-my.sa.gov.ge/api/v1/DrivingLicensePracticalExams2/DrivingLicenseExamsDates2?CategoryCode={self.transmition_ids[self.transmition]}&CenterId={self.city_ids[self.city]}"
