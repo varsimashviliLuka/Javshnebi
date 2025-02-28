@@ -59,8 +59,8 @@ def populate_db():
     new_role = Role(name="Admin", is_admin=True)
     new_role.create()
 
-    new_user = User(email='luka.varsimashvili@iliauni.edu.ge',
-                    password='LUKAluka123',
+    new_user = User(email='testuser@gmail.com',
+                    password='TESTtest123',
                     verified=True,
                     role=new_role)
     new_user.create()
