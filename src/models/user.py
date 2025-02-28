@@ -20,6 +20,8 @@ class User(db.Model, BaseModel):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     role = db.relationship('Role', back_populates='users')
 
+    subscriptions = db.relationship('Subscription', backref='users', lazy=True)
+
     @property
     def password(self):
         return self._password

@@ -12,7 +12,7 @@ from src.models import User
 BLUEPRINTS = [test_blueprint]
 COMMANDS = [init_db, populate_db, insert_db]
 
-
+# იქმნება აპლიკაცია
 
 def create_app(config=Config):
     app = Flask(__name__)
