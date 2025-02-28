@@ -7,8 +7,6 @@ from src.extensions import db, api, migrate, jwt
 from src.views import test_blueprint
 from src.commands import init_db, populate_db, insert_db
 
-from src.models import Center
-
 from src.models import User
 
 BLUEPRINTS = [test_blueprint]
