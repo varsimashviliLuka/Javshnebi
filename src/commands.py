@@ -53,7 +53,8 @@ def populate_db():
 
     click.echo("Adding test user")
 
-    # Iterate through each row in the CSV file
+    new_role = Role(name="User", is_admin=False)
+    new_role.create()
 
     new_role = Role(name="Admin", is_admin=True)
     new_role.create()

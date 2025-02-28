@@ -39,6 +39,7 @@ class Config(object):
     MAIL_USERNAME = config('MAIL_USERNAME', 'MAIL_USERNAME')
     MAIL_PASSWORD = config('MAIL_PASSWORD', 'MAIL_PASSWORD')
 
+
 class DevConfig(Config):
     TESTING = True
 

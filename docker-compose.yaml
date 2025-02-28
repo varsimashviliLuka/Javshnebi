@@ -34,7 +34,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./database:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./my.cnf:/etc/mysql/my.cnf 
     networks:
@@ -43,3 +43,6 @@ services:
 networks:
   net:
     driver: bridge  # Bridge ტიპის ქსელი, რომელიც გამოიყენება კონტეინერების იზოლაციისთვის.
+
+volumes:
+  mysql_data:

@@ -15,10 +15,12 @@ BLUEPRINTS = [test_blueprint]
 COMMANDS = [init_db, populate_db, insert_db]
 
 
+
 def create_app(config=Config):
     app = Flask(__name__)
     CORS(app)
     app.config.from_object(config)
+    
 
     @app.route('/')
     def index():
@@ -45,6 +47,7 @@ def register_extensions(app):
 
     # Flask-JWT-Extended
     jwt.init_app(app)
+
 
     @jwt.user_identity_loader
     def user_identity_lookup(user):
