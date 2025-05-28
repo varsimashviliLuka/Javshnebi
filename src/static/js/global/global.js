@@ -83,6 +83,50 @@ function refreshToken() {
     });
 }
 
+function makeApiRequest(url, options) {
+    const token = localStorage.getItem('access_token');
+    
+    // Check if the token is expired
+    if (isTokenExpired(token)) {
+        return refreshToken().then(newToken => {
+            options.headers = options.headers || {};
+            options.headers['Authorization'] = `Bearer ${newToken}`;
+            return fetch(url, options);
+        });
+    }
+
+    // Ensure the Authorization header is set
+    if (token) {
+        options.headers = options.headers || {};
+        options.headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return fetch(url, options)
+        .then(response => {
+            if (response.status === 401) {
+                // Unauthorized - token might be expired
+                return refreshToken()
+                    .then(newToken => {
+                        // Retry the original request with new token
+                        options.headers['Authorization'] = `Bearer ${newToken}`;
+                        return fetch(url, options);
+                    });
+            }
+            if (response.status === 422) {
+                // Unprocessable Entity - likely related to the request data
+                localStorage.removeItem('access_token');
+                window.location.href = '/';
+            } 
+            else {
+                return response;
+            }
+        })
+        .then(response => response.json())
+        .catch(error => {
+            console.error('API Request Error:', error);
+            // Handle errors appropriately
+        });
+}
 
 document.addEventListener("DOMContentLoaded", function() {
     const token = localStorage.getItem('access_token');

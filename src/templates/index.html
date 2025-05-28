@@ -10,27 +10,20 @@
     <div class="row g-3 mb-4">
         <div class="col-md-4">
             <label class="form-label">City</label>
-            <select class="form-select">
+            <select class="form-select" id="selectCities" required>
                 <option selected disabled>Choose city...</option>
-                <option>Batumi</option><option>Gori</option><option>Kutaisi</option><option>Poti</option>
-                <option>Rustavi</option><option>Tbilisi</option><option>Zugdidi</option>
             </select>
         </div>
         <div class="col-md-4">
             <label class="form-label">Transmission</label>
-            <select class="form-select">
+            <select class="form-select" id="selectCategories" required>
                 <option selected disabled>Choose transmission...</option>
-                <option>Manual</option><option>Automatic</option>
             </select>
         </div>
-        <div class="col-md-4 d-flex align-items-end">
-            <button class="btn btn-primary w-100">Check Availability</button>
+        <div class="col-md-4 d-flex align-items-end justify-content-between">
+            <button class="btn btn-primary me-2 w-50" onclick="sendData('check')">Check Availability</button>
+            <button class="btn btn-success w-50" onclick="sendData('subscribe')">Subscribe</button>
         </div>
-    </div>
-
-    <div class="input-group mb-4">
-        <input type="email" class="form-control" placeholder="Enter your email to subscribe">
-        <button class="btn btn-success">Subscribe</button>
     </div>
 
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -58,9 +51,11 @@
 </div>
 {% include "auth/register.html" %}
 {% include "auth/login.html" %}
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/index/index.js') }}"></script>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  // Toggle password visibility
   document.querySelectorAll(".toggle-password").forEach((btn) => {
     btn.addEventListener("click", () => {
       const target = document.getElementById(btn.dataset.target);
@@ -77,10 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-
-
 });
 </script>
-
 {% endblock %}
-
