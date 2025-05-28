@@ -28,7 +28,10 @@
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="mb-0">Available Slots</h5>
-        <a href="#" class="btn btn-sm btn-outline-light">My Subscriptions</a>
+        <a class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#subscriptionsModal" onclick="get_subscriptions()">
+  My Subscriptions
+</a>
+
     </div>
     <div class="table-responsive">
         <table class="table table-dark table-hover table-striped align-middle">
@@ -49,6 +52,7 @@
         </table>
     </div>
 </div>
+{% include "subscriptions/subscriptions.html" %}
 {% include "auth/register.html" %}
 {% include "auth/login.html" %}
 
