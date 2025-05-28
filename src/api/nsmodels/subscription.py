@@ -6,6 +6,7 @@ subscription_ns = api.namespace('Subscription', description='API გამოწ
 create_subscription_model = api.model('SubscriptionCreate',{
     'category_id': fields.Integer(required=True, description='შეიყვანეთ გადაცემათა კოლოფის კოდი (3 მექანიკა, 4 ავტომატიკა)', example=3),
     'center_id': fields.Integer(required=True, description='შეიყვანეთ ქალაქის კოდი', example=15),
+    'active': fields.Boolean(required=False, description='სტატუსი', example=True)
 })
 
 view_subscription_model = api.model('SubscriptionView',{
@@ -19,6 +20,8 @@ view_subscription_model = api.model('SubscriptionView',{
     'center_name_english': fields.String(required=True, description='ქალაქის დასახელება ინგლისურად', example='Rustavi'),
 
     'created_at': fields.DateTime(required=True, description='გამოწერის შექმნის თარიღი'),
-    'email_sent_at': fields.DateTime(description='ბოლოს გაგზავნილი მეილის თარიღი')
+    'email_sent_at': fields.DateTime(description='ბოლოს გაგზავნილი მეილის თარიღი'),
+
+    'active': fields.Boolean(description='სტატუსი')
 })
 

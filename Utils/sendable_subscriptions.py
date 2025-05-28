@@ -13,9 +13,12 @@ def get_sendable_subscriptions():
     with current_app.app_context():
         logger.info('Filtering subscriptions')
         subscriptions = Subscription.query.filter(
-            db.or_(
-                Subscription.email_sent_at == None,
-                Subscription.email_sent_at < two_weeks_ago
+            db.and_(
+                Subscription.active == True,
+                db.or_(
+                    Subscription.email_sent_at == None,
+                    Subscription.email_sent_at < two_weeks_ago
+                )
             )
         ).all()
 

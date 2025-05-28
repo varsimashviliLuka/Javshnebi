@@ -13,6 +13,8 @@ class Subscription(db.Model, BaseModel):
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     center_id = db.Column(db.Integer, db.ForeignKey('centers.id'), nullable=False)
 
+    active = db.Column(db.Boolean, nullable=False, default=True)
+
     # Relationships to access full objects
     user = db.relationship('User', back_populates='subscriptions', lazy='joined')
     category = db.relationship('Category', back_populates='subscriptions', lazy='joined')

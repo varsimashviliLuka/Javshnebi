@@ -13,12 +13,25 @@ if (localStorage.getItem('access_token')){
     .then(resp => {
     resp.forEach(element => {
             const row = document.createElement("tr");
-        row.innerHTML = `
-        <td>${element.center_name_english}</td>
-        <td>${element.category_name_english}</td>
-        <td>${localStorage.getItem('user_email')}</td>
-        <td>${element.email_sent_at}</td>
-      `;
+row.innerHTML = `
+  <td>
+    <span class="badge bg-${element.active ? 'success' : 'secondary'}">
+      ${element.active ? 'Active' : 'Inactive'}
+    </span>
+  </td>
+  <td>${element.center_name_english}</td>
+  <td>${element.category_name_english}</td>
+  <td>${element.email_sent_at}</td>
+  <td>
+    <button 
+      class="btn btn-sm btn-${element.active ? 'outline-danger' : 'outline-success'}" 
+      onclick="${element.active 
+        ? `toggleSubscriptionAction(${element.subscription_id})` 
+        : `toggleSubscriptionAction(${element.subscription_id})`}">
+      ${element.active ? 'Deactivate' : 'Activate'}
+    </button>
+  </td>
+`;
       tbody.appendChild(row);
     });
 
@@ -28,6 +41,29 @@ if (localStorage.getItem('access_token')){
     showAlert('alertPlaceholderSubscription', 'danger', 'გთხოვთ გაიაროთ ავტორიზაცია')
 }
   }
+
+
+function toggleSubscriptionAction(subscription_id){
+
+if (localStorage.getItem('access_token')){
+    let data = {
+    method: 'PATCH',
+    headers: {
+        'Content-Type': 'application/json'
+    }}
+
+    makeApiRequest(`/api/subscription/${subscription_id}`, data)
+    .then(resp =>{
+      if (resp.message){
+        showAlert('alertPlaceholderSubscription', 'success', resp.message)
+        get_subscriptions()
+      }else {
+        showAlert('alertPlaceholderSubscription', 'danger', resp.error)
+      }
+    })
+
+  }
+}
   
 
 

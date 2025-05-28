@@ -16,6 +16,8 @@ class SubscriptionApi(Resource):
         
         category_id = data.get('category_id')
         center_id = data.get('center_id')
+        active = data.get('active')
+
 
         # Validate category
         category = Category.query.filter_by(official_category_id=category_id).first()
@@ -37,12 +39,15 @@ class SubscriptionApi(Resource):
             subscription = Subscription.query.filter_by(user_id=user.id).first()
             subscription.category = category
             subscription.center = center
+            subscription.active = active
+            print()
             subscription.save()
             return {'message': 'თქვენი პარამეტრები წარმატებით განახლდა'}, 200
         else:
             subscription = Subscription(user=user,
                                         category=category,
-                                        center=center)
+                                        center=center,
+                                        active=active)
             subscription.create()
 
             return {'message': 'თქვენი პარამეტრები წარმატებით შეიქმნა'}, 200
@@ -79,6 +84,7 @@ class SubscriptionApi(Resource):
 
                 'created_at': subscription.created_at,
                 'email_sent_at': subscription.email_sent_at,
+                'active': subscription.active
             }
 
             result.append(model)
@@ -106,3 +112,27 @@ class SubscriptionDeleteApi(Resource):
             return {'message': 'გამოწერა წარმატებით გაუქმდა'}, 200
         
         return {'error': 'თქვენ არ გაქვთ subscription ის წაშლის უფლება'}, 403
+    
+    @jwt_required()
+    @subscription_ns.doc(security='JsonWebToken')
+    def patch(self,subscription_id):
+        ''' გამოწერის დეაქტივაცია/აქტივაცია '''
+
+        user = User.query.filter_by(uuid=get_jwt_identity()).first()
+        if not user:
+            return {'error': 'მომხმარებელი არ მოიძებნა'}, 400
+        
+        subscription = Subscription.query.filter_by(id=subscription_id).first()
+        if not subscription:
+            return {'error': 'გამოწერა ვერ მოიძებნა'}, 400
+        
+        if subscription.user_id == user.id:
+            if subscription.active:
+                subscription.active = False
+            else:
+                subscription.active = True
+            subscription.save()
+            
+            return {'message': 'გამოწერა წარმატებით დარედაქტირდა'}, 200
+        
+        return {'error': 'თქვენ არ გაქვთ subscription ის რედაქტირების უფლება'}, 403

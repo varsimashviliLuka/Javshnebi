@@ -13,16 +13,13 @@ function sendData(option) {
     const selectedCityId = selectCities.value;
     const selectedCategoryId = selectCategories.value;
 
-    console.log("Selected City ID:", selectedCityId);
-    console.log("Selected Category ID:", selectedCategoryId);
-    console.log("Selected Category ID:", option);
-
     if(option == 'subscribe'){
         if (localStorage.getItem('access_token')){
     const formData = {
         
     category_id: selectedCategoryId,
-    center_id: selectedCityId
+    center_id: selectedCityId,
+    active: true
 
     }
 
