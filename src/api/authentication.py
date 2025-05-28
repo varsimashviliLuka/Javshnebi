@@ -81,7 +81,7 @@ class RegistrationApi(Resource):
         
         token = url_serializer.dumps(data.get('email'), salt='email-confirm')
 
-        verification_url = f'{request.url_root}api/verify/{token}'
+        verification_url = f'{request.url_root}verify?user_id={token}'
 
         subject = "Verify Your Email"
         message = f"Click the link to verify your email: {verification_url}"

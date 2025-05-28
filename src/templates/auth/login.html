@@ -1,0 +1,38 @@
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-dark">
+      <div class="modal-header border-bottom border-secondary">
+        <h5 class="modal-title">🔐 Log In to Javshnebi</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div id="alertPlaceholderLogin" class="px-4 pt-3"></div>
+
+      <form id="loginForm">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">📧 Email address</label>
+            <input type="email" class="form-control" name="email" id="loginEmail" placeholder="you@example.com" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">🔒 Password</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="loginPassword" name="password" placeholder="••••••••" required>
+              <button type="button" class="btn btn-outline-secondary toggle-password" data-target="loginPassword">
+                <i class="bi bi-eye-slash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-top border-secondary d-flex justify-content-between">
+          <small>Don't have an account? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Register</a></small>
+          <button type="submit" class="btn btn-primary">Log In</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/auth/login.js') }}"></script>
+
+

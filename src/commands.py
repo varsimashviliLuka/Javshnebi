@@ -2,8 +2,9 @@ from flask.cli import with_appcontext
 import click
 import csv
 from os import path
+from datetime import datetime, timedelta
 
-from src.models import Category, Center, User, Role
+from src.models import Category, Center, User, Role, DynamicTable, Subscription
 from src.extensions import db
 from src import Config
 
@@ -59,7 +60,7 @@ def populate_db():
     new_role = Role(name="Admin", is_admin=True)
     new_role.create()
 
-    new_user = User(email='testuser@gmail.com',
+    new_user = User(email='varsimashvili.official@gmail.com',
                     password='TESTtest123',
                     verified=True,
                     role=new_role)
@@ -68,15 +69,29 @@ def populate_db():
     click.echo("Test user added successfully")
     click.echo("First tables added")
 
+    click.echo("Adding empty dymanic data")
+            # Create a new Station instance for each row
+    city_ids = [2,3,4,5,6,7,8,9,10,15]
+    transmition_ids = [3,4]
+
+    for i in city_ids:
+        for j in transmition_ids:
+            new_dynamic_data = DynamicTable(official_center_id=i,official_category_id=j,availability={})
+            new_dynamic_data.create()
+    click.echo("Added empty dymanic data")
+
 
 @click.command("insert_db")
 @with_appcontext
 def insert_db():
-    # ყველა სადგურის სტატუსს ცვლის True-თი
-    # stations = Stations.query.all()
-    # for i in stations:
+    # testing
+    subscriptions = Subscription.query.filter_by(id=1).first()
+    subscriptions.email_sent_at = datetime.now() - timedelta(days=14)
+    subscriptions.save()
+    # for i in subscriptions:
     #     i.status = True
     #     i.save()
+
 
     
     pass

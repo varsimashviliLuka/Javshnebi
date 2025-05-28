@@ -18,9 +18,11 @@ class User(db.Model, BaseModel):
 
     # One-to-Many relationship with Role
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    role = db.relationship('Role', back_populates='users')
+    role = db.relationship('Role', back_populates='users', lazy='joined')
 
-    subscriptions = db.relationship('Subscription', backref='users', lazy=True)
+    # Add this in User class
+    subscriptions = db.relationship('Subscription', back_populates='user', lazy='joined')
+
 
     @property
     def password(self):

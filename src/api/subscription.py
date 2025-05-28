@@ -17,6 +17,15 @@ class SubscriptionApi(Resource):
         category_id = data.get('category_id')
         center_id = data.get('center_id')
 
+        # Validate category
+        category = Category.query.filter_by(official_category_id=category_id).first()
+        if not category:
+            return {'error': 'შეყვანილი კატეგორია არასწორია'}, 400
+
+        # Validate center
+        center = Center.query.filter_by(official_center_id=center_id).first()
+        if not center:
+            return {'error': 'შეყვანილი ცენტრი არასწორია'}, 400
 
         if not user:
             return {'error': 'მომხმარებელი არ მოიძებნა'}, 400
@@ -26,14 +35,14 @@ class SubscriptionApi(Resource):
         
         if len(user.subscriptions) >= 1:
             subscription = Subscription.query.filter_by(user_id=user.id).first()
-            subscription.category_id = category_id
-            subscription.center_id = center_id
+            subscription.category = category
+            subscription.center = center
             subscription.save()
             return {'message': 'თქვენი პარამეტრები წარმატებით განახლდა'}, 200
         else:
-            subscription = Subscription(user_id=user.id,
-                                        category_id=category_id,
-                                        center_id=center_id)
+            subscription = Subscription(user=user,
+                                        category=category,
+                                        center=center)
             subscription.create()
 
             return {'message': 'თქვენი პარამეტრები წარმატებით შეიქმნა'}, 200
@@ -73,7 +82,6 @@ class SubscriptionApi(Resource):
             }
 
             result.append(model)
-        print(result)
         return result, 200
 
 

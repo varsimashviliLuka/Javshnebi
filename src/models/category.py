@@ -9,7 +9,9 @@ class Category(db.Model, BaseModel):
     name_georgian = db.Column(db.String(50), nullable=False)
     name_english = db.Column(db.String(50), nullable=False)
 
-    subscriptions = db.relationship('Subscription', backref='categories', lazy=True)
+    # Add this in Category class
+    subscriptions = db.relationship('Subscription', back_populates='category', lazy='joined')
+
 
     def __repr__(self):
         return f'<Category(id={self.id}, official_category_id={self.official_category_id} ,name_english={self.name_english})>'

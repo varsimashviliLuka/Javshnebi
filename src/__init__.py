@@ -4,12 +4,14 @@ from flask_cors import CORS
 from src.config import Config
 from src.api import api
 from src.extensions import db, api, migrate, jwt
-from src.views import test_blueprint
+from src.views import verify_blueprint
 from src.commands import init_db, populate_db, insert_db
 
 from src.models import User
 
-BLUEPRINTS = [test_blueprint]
+from src.scheduler import init_scheduler 
+
+BLUEPRINTS = [verify_blueprint]
 COMMANDS = [init_db, populate_db, insert_db]
 
 # იქმნება აპლიკაცია
@@ -45,6 +47,8 @@ def register_extensions(app):
 
     # Flask-JWT-Extended
     jwt.init_app(app)
+
+    init_scheduler(app) 
 
 
     @jwt.user_identity_loader

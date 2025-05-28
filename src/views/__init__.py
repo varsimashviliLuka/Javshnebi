@@ -1,1 +1,1 @@
-from src.views.test.routes import test_blueprint
+from .verify.routes import verify_blueprint

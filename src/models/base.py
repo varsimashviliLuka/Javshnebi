@@ -10,8 +10,8 @@ class BaseModel():
         else:
             db.session.flush()
 
-    @staticmethod
-    def save():
+    def save(self):  # ← remove @staticmethod
+        db.session.add(self)  # ← ensure self is added (important for update tracking)
         db.session.commit()
 
     def delete(self):

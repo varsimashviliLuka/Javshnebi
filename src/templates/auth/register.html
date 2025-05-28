@@ -1,0 +1,49 @@
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-dark">
+      <div class="modal-header border-bottom border-secondary">
+        <h5 class="modal-title">📝 Register for Javshnebi</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div id="alertPlaceholderRegister" class="px-4 pt-3"></div>
+
+      <form id="registerForm">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">📧 Email address</label>
+            <input type="email" class="form-control" name="email" placeholder="you@example.com" id="registerEmail" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">🔒 Password</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="register-password" name="password" placeholder="••••••••" required>
+              <button type="button" class="btn btn-outline-secondary toggle-password" data-target="register-password">
+                <i class="bi bi-eye-slash"></i>
+              </button>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">🔁 Confirm Password</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="confirmPassword" name="confirm_password" placeholder="••••••••" required>
+              <button type="button" class="btn btn-outline-secondary toggle-password" data-target="confirmPassword">
+                <i class="bi bi-eye-slash"></i>
+              </button>
+            </div>
+          </div>
+          <div class="progress mt-2" style="height: 5px;">
+      <div class="progress-bar" id="password-strength" style="width: 0%;"></div>
+    </div>
+        </div>
+        <div class="modal-footer border-top border-secondary d-flex justify-content-between">
+          <small>Already have an account? <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Log in</a></small>
+          <button type="submit" class="btn btn-primary" id="registerBtn">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/auth/register.js') }}"></script>

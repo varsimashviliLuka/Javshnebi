@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Verify</title>
+    </head>
+    <body>
+        <script>const user_id = "{{ user_id }}"
+        fetch('/api/verify/'+user_id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.error){
+            alert(data.error);
+            window.location.href = '/';
+        }else {
+            alert(data.message)
+            window.location.href = '/';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+        </script>
+
+    </body>
+</html>
