@@ -40,10 +40,9 @@ function sendData(option) {
         }
         })
     }else {
-        showAlert('alertPlaceholder', 'danger', 'გთხოვთ გაიაროთ ავტორიზაცია')
+        showAlert('alertPlaceholder', 'danger', 'To use this service, Please log in!')
     }
 }else if (option == 'check') {
-  if (localStorage.getItem('access_token')) {
     const formData = {
       category_id: selectedCategoryId,
       center_id: selectedCityId,
@@ -57,7 +56,13 @@ function sendData(option) {
       body: JSON.stringify(formData)
     };
 
-    makeApiRequest('/api/filter', requestData)
+    fetch('/api/filter', requestData)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(resp => {
         const list = document.getElementById("availabilityList");
         list.innerHTML = "";
@@ -94,24 +99,27 @@ function sendData(option) {
       })
       .catch(err => {
         console.error("Error checking availability:", err);
-        showAlert('alertPlaceholder', 'danger', 'დაფიქსირდა შეცდომა');
+        showAlert('alertPlaceholder', 'danger', 'There was en error');
       });
-  } else {
-    showAlert('alertPlaceholder', 'danger', 'გთხოვთ გაიაროთ ავტორიზაცია');
-  }
 }
+
 
 }
 
 function loadAvailableSlots() {
-    let send = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+  fetch('/api/filter', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
     }
-    makeApiRequest('/api/filter', send)
-    .then(data => {
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
     const tbody = document.querySelector("table tbody");
     tbody.innerHTML = ""; // Clear old rows
 
@@ -140,6 +148,7 @@ function loadAvailableSlots() {
     console.error("Error fetching available slots:", err);
   });
 }
+
 
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);

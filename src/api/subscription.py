@@ -22,18 +22,18 @@ class SubscriptionApi(Resource):
         # Validate category
         category = Category.query.filter_by(official_category_id=category_id).first()
         if not category:
-            return {'error': 'შეყვანილი კატეგორია არასწორია'}, 400
+            return {'error': 'Invalid Category'}, 400
 
         # Validate center
         center = Center.query.filter_by(official_center_id=center_id).first()
         if not center:
-            return {'error': 'შეყვანილი ცენტრი არასწორია'}, 400
+            return {'error': 'Invalid City'}, 400
 
         if not user:
-            return {'error': 'მომხმარებელი არ მოიძებნა'}, 400
+            return {'error': 'Invalid User'}, 400
         
         if not user.verified:
-            return {'error': 'გთხოვთ გაიაროთ ვერიფიკაცია'}, 400
+            return {'error': 'User is Not Verified'}, 400
         
         if len(user.subscriptions) >= 1:
             subscription = Subscription.query.filter_by(user_id=user.id).first()
@@ -42,7 +42,7 @@ class SubscriptionApi(Resource):
             subscription.active = active
             print()
             subscription.save()
-            return {'message': 'თქვენი პარამეტრები წარმატებით განახლდა'}, 200
+            return {'message': 'Subscription Updated Successfully'}, 200
         else:
             subscription = Subscription(user=user,
                                         category=category,
@@ -50,7 +50,7 @@ class SubscriptionApi(Resource):
                                         active=active)
             subscription.create()
 
-            return {'message': 'თქვენი პარამეტრები წარმატებით შეიქმნა'}, 200
+            return {'message': 'Subscription Created Successfully'}, 200
         
     @jwt_required()
     @subscription_ns.doc(security='JsonWebToken')
@@ -60,16 +60,16 @@ class SubscriptionApi(Resource):
 
         user = User.query.filter_by(uuid=get_jwt_identity()).first()
         if not user:
-            return {'error': 'მომხმარებელი არ მოიძებნა'}, 400
+            return {'error': 'Invalid User'}, 400
         
         result = []
         for subscription in user.subscriptions:
             category = Category.query.filter_by(id=subscription.category_id).first()
             if not category:
-                return {'error': 'კატეგორია არ მოიძებნა'}, 400
+                return {'error': 'Invalid Category'}, 400
             center = Center.query.filter_by(id=subscription.center_id).first()
             if not center:
-                return {'error': 'ქალაქი არ მოიძებნა'}, 400
+                return {'error': 'Invalid City'}, 400
 
             model = {
                 'subscription_id': subscription.id,
@@ -101,17 +101,17 @@ class SubscriptionDeleteApi(Resource):
 
         user = User.query.filter_by(uuid=get_jwt_identity()).first()
         if not user:
-            return {'error': 'მომხმარებელი არ მოიძებნა'}, 400
+            return {'error': 'Invalid User'}, 400
         
         subscription = Subscription.query.filter_by(id=subscription_id).first()
         if not subscription:
-            return {'error': 'გამოწერა ვერ მოიძებნა'}, 400
+            return {'error': 'Invalid Subscription'}, 400
         
         if subscription.user_id == user.id:
             subscription.delete()
-            return {'message': 'გამოწერა წარმატებით გაუქმდა'}, 200
+            return {'message': 'Subscription Deleted Successfully'}, 200
         
-        return {'error': 'თქვენ არ გაქვთ subscription ის წაშლის უფლება'}, 403
+        return {'error': 'You do not have permission to delete Subscription'}, 403
     
     @jwt_required()
     @subscription_ns.doc(security='JsonWebToken')
@@ -120,11 +120,11 @@ class SubscriptionDeleteApi(Resource):
 
         user = User.query.filter_by(uuid=get_jwt_identity()).first()
         if not user:
-            return {'error': 'მომხმარებელი არ მოიძებნა'}, 400
+            return {'error': 'Invalid User'}, 400
         
         subscription = Subscription.query.filter_by(id=subscription_id).first()
         if not subscription:
-            return {'error': 'გამოწერა ვერ მოიძებნა'}, 400
+            return {'error': 'Invalid Subscription'}, 400
         
         if subscription.user_id == user.id:
             if subscription.active:
@@ -133,6 +133,6 @@ class SubscriptionDeleteApi(Resource):
                 subscription.active = True
             subscription.save()
             
-            return {'message': 'გამოწერა წარმატებით დარედაქტირდა'}, 200
+            return {'message': 'Subscription Edited Successfully'}, 200
         
-        return {'error': 'თქვენ არ გაქვთ subscription ის რედაქტირების უფლება'}, 403
+        return {'error': 'You do not have permission to edit Subscription'}, 403

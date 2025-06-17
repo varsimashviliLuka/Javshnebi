@@ -38,7 +38,7 @@ row.innerHTML = `
     })
 
 }else {
-    showAlert('alertPlaceholderSubscription', 'danger', 'გთხოვთ გაიაროთ ავტორიზაცია')
+    showAlert('alertPlaceholderSubscription', 'danger', 'To use this service, Please log in!')
 }
   }
 

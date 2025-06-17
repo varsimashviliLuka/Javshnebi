@@ -21,15 +21,15 @@ class AuthorizationApi(Resource):
 
         user = User.query.filter_by(email=data.get('email')).first()
         if not user:
-            return {'error': 'შეყვანილი პაროლი ან ელ.ფოსტა არასწორია'}, 400
+            return {'error': 'Invalid User Credentials'}, 400
         
         if not user.check_password(data.get('password')):
-            return {'error': 'შეყვანილი პაროლი ან ელ.ფოსტა არასწორია'}, 400
+            return {'error': 'Invalid User Credentials'}, 400
         
         access_token = create_access_token(identity=user.uuid)
         refresh_token = create_refresh_token(identity=user.uuid)
 
-        return {"message": "წარმატებით გაიარეთ ავტორიზაცია",
+        return {"message": "Authorization Successfully",
                 "access_token": access_token,
                 "refresh_token": refresh_token}, 200
 
@@ -66,10 +66,10 @@ class RegistrationApi(Resource):
 
         if user:
             if user.verified:
-                return {'error': 'მითითებული მეილი უკვე დარეგისტრირებულია'}, 400
+                return {'error': 'Email is already Registered'}, 400
         
         if data.get('password') != data.get('password_repeat'):
-            return {'error': 'პაროლები ერთმანეთს არ ემთხვევა'}, 400
+            return {'error': 'Passwords does not Match'}, 400
 
         if not user:
             user_role = Role.query.filter_by(name='User').first()
@@ -91,12 +91,12 @@ class RegistrationApi(Resource):
             status = mail.send_mail(emails=[email], subject=subject, message=message)
 
             if not status:
-                return{'error': 'ელ.ფოსტის გაგზავნის დროს დაფიქსირდა შეცდომა'}, 400
+                return{'error': 'There was an error sending Email'}, 400
             
-            return {'message': 'გთხოვთ შეამოწმოთ ელ.ფოსტა, ვერიფიკაციის კოდი გამოგზავნილია'}, 200
+            return {'message': 'Please check your Email, verification link is sent'}, 200
         
         except Exception as err:
-            return {'error': f'ელ.ფოსტის გაგზავნის დროს დაფიქსირდა შეცდომა: {err}'}, 400
+            return {'error': f'There was an error sending Email: {err}'}, 400
         
 
 
@@ -115,21 +115,21 @@ class VerifyEmailApi(Resource):
             
 
         if email == "expired":
-            return {'error': 'მოცემულ ტოკენს გაუვიდა ვადა, გთხოვთ სცადოთ თავიდან'}, 400
+            return {'error': 'Token Expired, Please Try Again'}, 400
         elif email == "invalid":
-            return {'error': 'არასწორი ტოკენი, სცადეთ თავიდან'}, 400
+            return {'error': 'Token Invalid, Please Try Again'}, 400
         
         user = User.query.filter_by(email=email).first()
 
         if not user:
-            return {'error': 'მითითებული ელ.ფოსტა არ არსებობს'}, 400
+            return {'error': 'Invalid Email'}, 400
         
         if user.verified:
-            return {'error': 'თქვენ უკვე ვერიფიცირებული ხართ!'}, 400
+            return {'error': 'You Are Already Verified'}, 400
 
         user.verified = True
         user.save()
-        return {'message': 'თქვენ წარმატებით გაიარეთ ვერიფიკაცია'}, 200
+        return {'message': 'Verification Successfull'}, 200
         
 
         

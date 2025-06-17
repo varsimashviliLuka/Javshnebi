@@ -27,7 +27,7 @@ function login(event) {
 
             window.location.href = '/';
         } else {
-            showAlert('alertPlaceholderLogin', 'danger', data.error || ' გაუმართავი ავტორიზაცია.');
+            showAlert('alertPlaceholderLogin', 'danger', data.error || ' Invalid Log In.');
         }
     })
     .catch(error => {

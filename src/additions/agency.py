@@ -9,7 +9,7 @@ class Agency:
     def check_availability(self):
         response = requests.get(self.agency_link)
         if not response.ok:
-            return {'error': 'დაფიქსირდა შეცდომა მონაცემების წამოღების დროს'}
+            return {'error': 'There was an error while fetching data.'}
         else:
             final = response.json()
             return final

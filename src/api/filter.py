@@ -4,8 +4,6 @@ from flask import request
 from collections import defaultdict
 from datetime import datetime
 
-from flask_jwt_extended import jwt_required
-
 from src.api.nsmodels import filter_ns, filter_model, get_data_model
 from src.extensions import Agency
 
@@ -13,8 +11,6 @@ from src.models import DynamicTable, Category, Center
 
 @filter_ns.route('/filter')
 class FilterApi(Resource):
-    @jwt_required()
-    @filter_ns.doc(security='JsonWebToken')
     @filter_ns.expect(filter_model)
     def post(self):
         ''' მონაცემების გაფილტვრა '''
@@ -30,8 +26,6 @@ class FilterApi(Resource):
 
         return {"available_slots": availability}
     
-    @jwt_required()
-    @filter_ns.doc(security='JsonWebToken')
     def get(self):
         ''' ყველა შესაძლო ჯავშნის ნახვა (optimized for main page) '''
         
