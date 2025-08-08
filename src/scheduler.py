@@ -26,7 +26,7 @@ def init_scheduler(app):
         id='update_availability',
         func=job_with_context,
         trigger='interval',
-        minutes=10
+        minutes=9
     )
 
     scheduler.add_listener(job_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
