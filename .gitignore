@@ -1,11 +1,25 @@
+# Python cache
 __pycache__/
+
+# IDE/editor folders
 .idea/
+.vscode/
+
+# Virtual environments
 /venv/
 /env/
-/.vscode
 /fronend_venv/
+
+# Database files
 /database/
 *.sqlite
-/logs/
+
+# Logs - keep directory but ignore contents
+/logs/*
+!/logs/.gitkeep
+
+# Environment files
 .env
+
+# Export folder
 /export/
