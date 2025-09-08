@@ -45,6 +45,8 @@ class DevConfig(Config):
 
     WTF_CSRF_ENABLED = False
 
-    SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{Config.MYSQL_USER}:{Config.MYSQL_PASSWORD}@localhost/{Config.MYSQL_DATABASE}'
+    SQLALCHEMY_DATABASE_URI = (
+        f'mysql+pymysql://{Config.MYSQL_USER}:{Config.MYSQL_PASSWORD}@{Config.MYSQL_HOST}/{Config.MYSQL_DATABASE}'
+    )
 
 

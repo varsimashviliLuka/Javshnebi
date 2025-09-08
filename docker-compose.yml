@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: javshnebi-db
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  backend:
+    build: .
+    container_name: javshnebi-backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./logs:/app/logs
+    command: ["gunicorn", "--bind", "0.0.0.0:5000", "app:flask_app", "--workers", "4"]
+
+  scheduler:
+    build: .
+    container_name: javshnebi-scheduler
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - ./logs:/app/logs
+    command: ["python", "scheduler_runner.py"]
+
+volumes:
+  db_data:

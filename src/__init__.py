@@ -9,7 +9,6 @@ from src.commands import init_db, populate_db, insert_db
 
 from src.models import User
 
-from src.scheduler import init_scheduler 
 
 BLUEPRINTS = [verify_blueprint]
 COMMANDS = [init_db, populate_db, insert_db]
@@ -48,7 +47,6 @@ def register_extensions(app):
     # Flask-JWT-Extended
     jwt.init_app(app)
 
-    init_scheduler(app) 
 
 
     @jwt.user_identity_loader
