@@ -68,6 +68,11 @@ docker-compose up --build -d
 ## Screenshots
 
 ![Dashboard](screenshots/1.png)
+![Dashboard](screenshots/2.png)
+![Dashboard](screenshots/3.png)
+![Dashboard](screenshots/4.png)
+![Dashboard](screenshots/5.png)
+![EmailExample](screenshots/6.png)
 
 ## Contributing
 
