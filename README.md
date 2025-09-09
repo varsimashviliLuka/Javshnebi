@@ -1,6 +1,6 @@
 # Javshnebi
 
-![Python](https://img.shields.io/badge/Python-3.10-blue) ![License](https://img.shields.io/badge/License-MIT-green) ![Docker](https://img.shields.io/badge/Docker-Ready-lightgrey)
+![Python](https://img.shields.io/badge/Python-3.10-blue) ![Docker](https://img.shields.io/badge/Docker-Ready-lightgrey)
 
 **Javshnebi** is a Python-based open-source project that monitors available city exam slots for driving licenses in Georgia. When a slot becomes available, it sends an email notification to subscribed users. The application checks for new slots every **9 minutes**, ensuring you always get the latest updates.
 
@@ -64,6 +64,10 @@ docker-compose up --build -d
 > ✅ As long as the Docker container is running and the `.env` file is correctly configured, everything will work perfectly.
 
 ---
+
+## Screenshots
+
+![Dashboard](screenshots/1.png)
 
 ## Contributing
 
