@@ -35,8 +35,8 @@ def update_availability():
                                 if len(data) > 1:
                                     email = subscription.user.email
 
-                                    subject = 'ქალაქის ჯავშანი გახსნილია!'
-                                    message = 'მოგესალმებით, გაცნობებთ, რომ მართვის მოწმობის ქალაქის ჯავშანი გახსნილია, ეწვიეთ მომსახურეობის სააგენტოს საიტს დასაჯავშნად. საიტის ბმული: https://my.sa.gov.ge/drivinglicenses/practicalexam'
+                                    subject = 'ქალაქის ჯავშანი გახსნილია!\n\nThe city booking is now open!'
+                                    message = 'მოგესალმებით, გაცნობებთ, რომ მართვის მოწმობის ქალაქის ჯავშანი გახსნილია, ეწვიეთ მომსახურეობის სააგენტოს საიტს დასაჯავშნად. საიტის ბმული: https://my.sa.gov.ge/drivinglicenses/practicalexam\n\nHello, we inform you that the booking for the city driving license exam is now open. Please visit the Service Agency website to make a reservation. Website link: https://my.sa.gov.ge/drivinglicenses/practicalexam'
                                     status = mail.send_mail(emails=[email], subject=subject, message=message)
                                     if not status:
                                         logger.error(f'error while sending email to: {email}')
