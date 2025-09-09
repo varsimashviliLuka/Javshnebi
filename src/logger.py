@@ -11,18 +11,18 @@ def get_logger(name: str) -> logging.Logger:
     if not logger.handlers:
         # File handler
         file_handler = logging.FileHandler(f"{log_dir}/{name}.log")
-        file_handler.setLevel(logging.INFO)  # Capture INFO+ messages
+        file_handler.setLevel(logging.ERROR)  # Capture INFO+ messages
         formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(module)s: %(message)s')
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
 
         # Stream handler for Docker logs
         stream_handler = logging.StreamHandler()
-        stream_handler.setLevel(logging.INFO)
+        stream_handler.setLevel(logging.ERROR)
         stream_handler.setFormatter(formatter)
         logger.addHandler(stream_handler)
 
-        logger.setLevel(logging.INFO)
+        logger.setLevel(logging.ERROR)
         logger.propagate = False
 
     return logger
